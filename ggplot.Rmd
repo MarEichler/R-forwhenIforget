@@ -20,7 +20,7 @@ editor_options:
 <a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html" target="_blank"> Laying out multiple plots on a page - Baptiste Auguie </a>
 
 ## Line up axes on stacked plots 
-Sometimes I'm working on two different types of plots (like a bar chart and a scatter plot) that happen to have the same x-axis.  I want to line up these axes so that when the plots are stacked the values correspond to the same date.  This is done automatically using faceting, `facet_wrap` but faceting doesn't work if you want to have different geoms for the plot or if you have different sources of data.  
+Sometimes I'm working on two different types of plots (like a bar chart and a scatter plot) that happen to have the same x-axis.  I want to line up these axes so that when the plots are stacked the values correspond to the same date.  
 
 ```{r, message=FALSE}
 # load-packages
@@ -32,8 +32,8 @@ library(tidyverse)
 ### Same geom type
 ```{r}
 # two different bar charts
-A <- ggplot(mpg, aes(class))+geom_bar()+coord_flip()
-B <- ggplot(mpg, aes(drv))+geom_bar()+coord_flip()
+A <- ggplot(mpg, aes(class))+geom_bar()+coord_flip()+ylim(0, 109)
+B <- ggplot(mpg, aes(drv))+geom_bar()+coord_flip()+ylim(0, 109)
 ```
 
  Using `grid.arrange` command from the `gridExtra` package does not line up axes.  
@@ -50,6 +50,13 @@ gA <- ggplotGrob(A)
 gB <- ggplotGrob(B)
 grid::grid.draw(rbind(gA, gB))
 ```
+
+Another option is `facet_wrap`, which works great if the axes are the same for the different varaibles you want to compare, but isn't a perfect solution to everything (see below). 
+```{r}
+tidy.df <- pivot_longer(mpg, c(class, drv))
+ggplot(tidy.df, aes(value))+geom_bar()+facet_wrap(~name)
+```
+
 
 ### Bar Chart and Scatter Plots  
 Scatter plots and bar charts will not line up automatically, even when using the `grid.draw` command detailed above.  This is because their default limits are different given that the bar chart is centered on the value and the scatter plot is a single point on the value.  
