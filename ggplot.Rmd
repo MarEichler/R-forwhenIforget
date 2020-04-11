@@ -1,0 +1,133 @@
+---
+title: ""
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Line up axes on stacked plots 
+Sometimes I'm working on two different types of plots (like a bar chart and a scatter plot) that happen to have the same x-axis.  I want to line up these axes so that when the plots are stacked the values correspond to the same date.  This is done automatically using faceting, `facet_wrap` but faceting doesn't work if you want to have different geoms for the plot or if you have different sources of data.  
+
+```{r, message=FALSE}
+# load-packages
+library(ggplot2)
+library(tidyverse)
+```
+
+
+### Same geom type
+```{r}
+# two different bar charts
+A <- ggplot(mpg, aes(class))+geom_bar()+coord_flip()
+B <- ggplot(mpg, aes(drv))+geom_bar()+coord_flip()
+```
+
+ Using `grid.arrange` command from the `gridExtra` package does not line up axes.  
+```{r}
+#axes don't line up
+gridExtra::grid.arrange(A, B, ncol=1)
+```
+
+Use `grid.draw` command from the `grid` package - as detailed [here on StackExchange](https://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot).  
+```{r}
+#make plots into Grobs (grid graphical object)
+gA <- ggplotGrob(A) 
+gB <- ggplotGrob(B)
+grid::grid.draw(rbind(gA, gB))
+```
+
+### Different geom types: bar chart & scatter plot  
+Scatter plots and bar charts will not line up automatically, even when using the `grid.draw` command detailed above.  This is because their default limits are different given that the bar chart is centered on the value and the scatter plot is a single point on the value.  
+
+```{r}
+#work with smaller subset of data from economics, part of ggplot2 package 
+startdate <- "2014-06-01"
+economics_small <- economics %>%
+  filter(date >= as.Date(startdate)) %>%
+  arrange(date)
+```
+
+
+```{r}
+A <- ggplot(economics_small, aes(date, unemploy))+
+  geom_bar(stat="identity")+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)
+
+B <- ggplot(economics_small, aes(date, uempmed))+
+  geom_point()+geom_line()+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)
+
+gA <- ggplotGrob(A) 
+gB <- ggplotGrob(B)
+grid::grid.draw(rbind(gA, gB))
+```
+
+In order to line the up there a a couple of options.  
+
+#### Fix xlim for all charts 
+
+If you make the limit the first x-value, the bar chart will not show up (remember it's centered over the value).  
+```{r}
+A <- ggplot(economics_small, aes(date, unemploy))+
+  geom_bar(stat="identity")+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)+
+  xlim(as.Date(startdate), NA)
+
+B <- ggplot(economics_small, aes(date, uempmed))+
+  geom_point()+geom_line()+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)+
+  xlim(as.Date(startdate), NA)
+
+gA <- ggplotGrob(A) 
+gB <- ggplotGrob(B)
+grid::grid.draw(rbind(gA, gB))
+```
+
+This can be fixed by adding a half unit to the x-axis (i.e. having the lower limit be half-unit lower than smallest x-value). In this case the unit is a month, so a half-unit would be ~15 days.  
+
+```{r}
+HalfUnit <- .5*(economics_small$date[2] - economics_small$date[1])
+HalfUnit
+```
+
+
+```{r}
+A <- ggplot(economics_small, aes(date, unemploy))+
+  geom_bar(stat="identity")+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)+
+  xlim(as.Date(startdate)-HalfUnit, NA)
+
+B <- ggplot(economics_small, aes(date, uempmed))+
+  geom_point()+geom_line()+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)+
+  xlim(as.Date(startdate)-HalfUnit, NA)
+
+gA <- ggplotGrob(A) 
+gB <- ggplotGrob(B)
+grid::grid.draw(rbind(gA, gB))
+```
+
+### Shift Bar chart to right  
+Bar charts are automatically centered over the x-value.  Bar charts (and any geom object) can be shifted by using `position - position_nudge())`.  The shift needs to be half a unit on the x-axis, again here it is monthly data so a half unit would be ~15 days.  
+
+```{r}
+A <- ggplot(economics_small, aes(date, unemploy))+
+  geom_bar(stat="identity", position = position_nudge(x = HalfUnit))+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)
+
+B <- ggplot(economics_small, aes(date, uempmed))+
+  geom_point()+geom_line()+
+  geom_vline(xintercept = as.Date(startdate), color="red", size=2)
+
+gA <- ggplotGrob(A) 
+gB <- ggplotGrob(B)
+
+grid::grid.draw(rbind(gA, gB))
+```
+
