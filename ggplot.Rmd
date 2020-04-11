@@ -10,6 +10,11 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
+## Online books
+<a href="https://ggplot2-book.org/" target="_blank"> ggplot2 - Hadley Wickham </a>  
+
+<a href="https://serialmentor.com/dataviz/" target="_blank"> Fundamentals of Data Visualization - Claus O. Wilke </a>
+
 
 ## Laying out multiple plots 
 <a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html" target="_blank"> Laying out multiple plots on a page - Baptiste Auguie </a>
