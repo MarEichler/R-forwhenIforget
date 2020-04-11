@@ -11,7 +11,7 @@ output:
 ---
 Because I keep saying I will remember how do do things and then I don't so I'm putting  the bookmarked links and comments into one place to try and help me spend less time searching for answers.   
 
-# ggplot
+# **ggplot**
 ```{r child='ggplot.Rmd' }
 ```
 
