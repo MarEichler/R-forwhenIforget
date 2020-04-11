@@ -34,7 +34,8 @@ B <- ggplot(mpg, aes(drv))+geom_bar()+coord_flip()
 gridExtra::grid.arrange(A, B, ncol=1)
 ```
 
-Use `grid.draw` command from the `grid` package - as detailed [here on StackExchange](https://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot).  
+Use `grid.draw` command from the `grid` package.  
+[Source](https://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot)  
 ```{r}
 #make plots into Grobs (grid graphical object)
 gA <- ggplotGrob(A) 
@@ -42,7 +43,7 @@ gB <- ggplotGrob(B)
 grid::grid.draw(rbind(gA, gB))
 ```
 
-### Different geom types: bar chart & scatter plot  
+### Bar Chart and Scatter Plots  
 Scatter plots and bar charts will not line up automatically, even when using the `grid.draw` command detailed above.  This is because their default limits are different given that the bar chart is centered on the value and the scatter plot is a single point on the value.  
 
 ```{r}
@@ -115,6 +116,7 @@ grid::grid.draw(rbind(gA, gB))
 
 ### Shift Bar chart to right  
 Bar charts are automatically centered over the x-value.  Bar charts (and any geom object) can be shifted by using `position - position_nudge())`.  The shift needs to be half a unit on the x-axis, again here it is monthly data so a half unit would be ~15 days.  
+[Source](https://stackoverflow.com/questions/38752968/shift-geom-bar-right-not-center-aligned)  
 
 ```{r}
 A <- ggplot(economics_small, aes(date, unemploy))+
