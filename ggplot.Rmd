@@ -11,6 +11,9 @@ editor_options:
   chunk_output_type: console
 ---
 
+## Laying out multiple plots 
+<a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html" target="_blank"> Laying out multiple plots on a page - Baptiste Auguie </a>
+
 ## Line up axes on stacked plots 
 Sometimes I'm working on two different types of plots (like a bar chart and a scatter plot) that happen to have the same x-axis.  I want to line up these axes so that when the plots are stacked the values correspond to the same date.  This is done automatically using faceting, `facet_wrap` but faceting doesn't work if you want to have different geoms for the plot or if you have different sources of data.  
 
@@ -35,7 +38,7 @@ gridExtra::grid.arrange(A, B, ncol=1)
 ```
 
 Use `grid.draw` command from the `grid` package.  
-[Source](https://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot)  
+<a href="https://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot" target="_blank"> Source </a>
 ```{r}
 #make plots into Grobs (grid graphical object)
 gA <- ggplotGrob(A) 
@@ -116,7 +119,7 @@ grid::grid.draw(rbind(gA, gB))
 
 ### Shift Bar chart to right  
 Bar charts are automatically centered over the x-value.  Bar charts (and any geom object) can be shifted by using `position - position_nudge())`.  The shift needs to be half a unit on the x-axis, again here it is monthly data so a half unit would be ~15 days.  
-[Source](https://stackoverflow.com/questions/38752968/shift-geom-bar-right-not-center-aligned)  
+<a href="https://stackoverflow.com/questions/38752968/shift-geom-bar-right-not-center-aligned" target="_blank"> Source </a>
 
 ```{r}
 A <- ggplot(economics_small, aes(date, unemploy))+
