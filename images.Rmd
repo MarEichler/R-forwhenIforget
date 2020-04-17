@@ -13,14 +13,14 @@ editor_options:
 
 ## Markdown  
 
-`![these are my pigs](Peegs.jpg)`
-![these are my pigs](Peegs.jpg)
+`![this is Daffodil and Blossom](Peegs.jpg)`
+![this is Daffodil and Blossom](Peegs.jpg)
 
-Resizing images in Markdown is requried if you are knitting to a pdf - because you can't use HTML code.  
+Re sizing images in Markdown is required if you are knitting to a pdf - because you can't use HTML code.  
 
 [Tip and tricks for workign wtih images and figures in R Markdown documents - hollie@zevross.com](http://zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
 
-Adjust the `out.width` and `out.hight` in the R chunk options
+Adjust the `out.width` and `out.height` in the R chunk options
 
 
 ```
@@ -35,9 +35,9 @@ knitr::include_graphics(img) #in the knitr package
 ```
 
 ## HTML in markdown  
-In my opinon, HTML is a lot easier to use for images options.  
+In my opinion, HTML is a lot easier to use for images options.  
 
 [HTML Images](https://www.w3schools.com/html/html_images.asp)
 
-`<img src="Peegs.jpg" alt="these are my pigs" width="50%"> `  
-<img src="Peegs.jpg" alt="these are my pigs" width="50%"> 
+`<img src="Peegs.jpg" alt="this is Daffodil and Blossom" width="50%"> `  
+<img src="Peegs.jpg" alt="this is Daffodil and Blossom" width="50%"> 
