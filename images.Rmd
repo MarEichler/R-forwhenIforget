@@ -39,5 +39,5 @@ In my opinon, HTML is a lot easier to use for images options.
 
 [HTML Images](https://www.w3schools.com/html/html_images.asp)
 
-`<img src="Peegs.jpg" width="50%"> `  
-<img src="Peegs.jpg" width="50%"> 
+`<img src="Peegs.jpg" alt="these are my pigs" width="50%"> `  
+<img src="Peegs.jpg" alt="these are my pigs" width="50%"> 
