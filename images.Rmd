@@ -1,0 +1,43 @@
+---
+title: "Images"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Markdown  
+
+`![these are my pigs](Peegs.jpg)`
+![these are my pigs](Peegs.jpg)
+
+Resizing images in Markdown is requried if you are knitting to a pdf - because you can't use HTML code.  
+
+[Tip and tricks for workign wtih images and figures in R Markdown documents - hollie@zevross.com](http://zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
+
+Adjust the `out.width` and `out.hight` in the R chunk options
+
+
+```
+{r, out.width="50%"}  
+img <- "Peegs.jpg" #path to image  
+knitr::include_graphics(img) #in the knitr package   
+```
+
+```{r, echo=FALSE, out.width="50%"}
+img <- "Peegs.jpg" #path to image 
+knitr::include_graphics(img) #in the knitr package 
+```
+
+## HTML in markdown  
+In my opinon, HTML is a lot easier to use for images options.  
+
+[HTML Images](https://www.w3schools.com/html/html_images.asp)
+
+`<img src="Peegs.jpg" width="50%"> `  
+<img src="Peegs.jpg" width="50%"> 
