@@ -15,3 +15,7 @@ Because I keep saying I will remember how do do things and then I don't so I'm p
 ```{r child='ggplot.Rmd' }
 ```
 
+# **Images**  
+```{r child='images.Rmd'}
+```
+
