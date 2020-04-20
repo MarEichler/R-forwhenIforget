@@ -1,0 +1,45 @@
+---
+title: "if else statements"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+test expression goes in parenthesis `()` and the statment goes in the curly brakets `{}`  
+
+## If 
+
+```
+if (test) { statment } 
+```
+
+
+## If else  
+R is a bit finicky with where the brakets go; I get errors when I put `else` on a new line by itself - it wants to have the right braket before it; `} else` 
+```
+if (test) {
+statment #1
+} else {
+statment #2 
+}
+```
+
+## If elseif elseif ... else 
+
+```
+if (test) {
+statment #1
+} elseif {
+statment #2 
+} elseif {
+statment #3 
+} else {
+statment #4 
+}
+```
