@@ -29,7 +29,7 @@ library(tidyverse)
 Why do I always forget the direction of these? 
 
 **hjust:** 0 = left-aligned, 0.5=center, 1 = right-aligned  
-**vjust:** 0 = bottom-aligned, 0.5=middle, 1 = top-aligned  
+**vjust:** 0 = top-aligned, 0.5=middle, 1 = bottom-aligned  
 
 <a href="https://www.r-bloggers.com/hjust-and-vjust/" target="_blank"> Visual Representation - R-bloggers </a>  
 
