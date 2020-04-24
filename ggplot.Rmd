@@ -21,17 +21,43 @@ library(tidyverse)
 
 <a href="https://serialmentor.com/dataviz/" target="_blank"> Fundamentals of Data Visualization - Claus O. Wilke </a>
 
-
-## Laying out multiple plots 
-<a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html" target="_blank"> Laying out multiple plots on a page - Baptiste Auguie </a>  
-
 ## hjust and vjust
 Why do I always forget the direction of these? 
 
 **hjust:** 0 = left-aligned, 0.5=center, 1 = right-aligned  
 **vjust:** 0 = top-aligned, 0.5=middle, 1 = bottom-aligned  
 
-<a href="https://www.r-bloggers.com/hjust-and-vjust/" target="_blank"> Visual Example - R-bloggers </a>  
+<a href="https://www.r-bloggers.com/hjust-and-vjust/" target="_blank"> Visual Example - R-bloggers </a> 
+
+## Math Expressions in labels 
+
+### Use `quote()` 
+```{r}
+ggplot(mpg, aes(displ, hwy))+geom_point()+
+  ggtitle(
+    quote(
+      alpha ^ 2 - frac(1, 10) + sum(n[i], i==1, N)
+                )
+    )
+```
+
+### Use `TeX()` from the `latex2exp` package  
+- must be in a string
+- must be denoted as math mode with dollar signs
+- must include **2** backslashes for $\LaTeX$ commands 
+```{r}
+library(latex2exp)
+ggplot(mpg, aes(displ, hwy))+geom_point()+
+  ggtitle(TeX(
+    "$\\alpha^2 - \\frac{1}{10} + \\sum_{i}^N n_i$"
+                )
+    )
+```
+
+
+## Laying out multiple plots 
+<a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html" target="_blank"> Laying out multiple plots on a page - Baptiste Auguie </a>  
+
 
 ## Line up axes on stacked plots 
 Sometimes I'm working on two different types of plots (like a bar chart and a scatter plot) that happen to have the same x-axis.  I want to line up these axes so that when the plots are stacked the values correspond to the same date.  
