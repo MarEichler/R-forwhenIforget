@@ -1,0 +1,41 @@
+---
+title: "Correlation"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+## base R correlation: `cor()`  
+
+
+```{r}
+cor(mtcars[,1:4])
+```
+
+If data has NA's in any of the values the `cor()` will results in `NA`.  If you want to remove the NA's when calculating correlation do: 
+
+```
+cor(..., use = "complete.obs")
+```
+
+Source: [https://stackoverflow.com/questions/3798998/cor-shows-only-na-or-1-for-correlations-why](https://stackoverflow.com/questions/3798998/cor-shows-only-na-or-1-for-correlations-why)
+
+## Dot Plots for Multiple Variables: `pairs()`  
+ 
+That chart that plots all variables against eachother as a dot plot when looking to see if variables are correlated with eachother 
+
+
+
+```{r}
+#lots of variables so only look at first 4
+testdf <- mtcars[,1:4]
+pairs(testdf, main = "title")
+```
+
+
