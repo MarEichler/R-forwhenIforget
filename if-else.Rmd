@@ -43,3 +43,26 @@ statment #3
 statment #4 
 }
 ```
+
+## `ifelse()`
+
+Automatically works for vectors so this is preferred if making adjustments to data set variables.   
+
+```
+ifelse(condition, value if true, value if false)
+```
+
+## `case_when()` (instead of nested `ifelse()` statements)
+
+[RDocumentation: case_when()](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/case_when)
+
+```
+case_when(
+    x == val1 ~ output1
+  , x == val2 ~ output2
+  , x == val3 ~ output3
+  #if x doesn't fit into above values can set a catch-all output
+  #if catch-all output is not defined; output will be NA for x's that don't meet conditons
+  , TRUE      ~ everythingelse 
+)
+```

@@ -11,6 +11,15 @@ output:
 ---
 Because I keep saying I will remember how do do things and then I don't so I'm putting  the bookmarked links and comments into one place to try and help me spend less time searching for answers.   
 
+# **Correlation**
+
+```{r child='correlation.Rmd'}
+```
+
+# **CSV**
+
+```{r child='csv.Rmd'}
+```
 
 # **ggplot**
 ```{r child='ggplot.Rmd' }
@@ -25,8 +34,5 @@ Because I keep saying I will remember how do do things and then I don't so I'm p
 ```{r child='images.Rmd'}
 ```
 
-# **Correlation**
 
-```{r child='correlation.Rmd'}
-```
 
