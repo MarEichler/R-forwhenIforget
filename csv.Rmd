@@ -1,0 +1,91 @@
+---
+title: "csv - read/write"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Read (Import)
+
+### base R `read.csv()`
+
+```{r}
+read.csv("example.csv")
+```
+
+- output is data frame (base R)
+- missing for character is blank
+- missing for numeric is 'NA' (not colored)
+- spaces or special characters in headers are replaced with period 
+- ï.. added to beginning of first column name (to remove use `read.csv("example.csv", fileEncoding = 'UTF-8-BOM')`; [Source](https://www.roelpeters.be/removing-i-umlaut-two-dots-data-frame-column-read-csv/))
+- remove headers with `header = FALSE`; column names will be V1, V2, V3, etc. 
+
+
+### `readr` `read_csv()`
+
+```{r}
+library(readr) #included in tidyverse
+read_csv("example.csv")
+```
+
+- output is tibble (tidyverse)
+- receive message with type of columns that R is using for import 
+- missing for character and numeric is NA (colored red) in R console; outputs (html) will show has <NA> for character and NA for numeric 
+- headers are that have spaces or special characters are placed within backticks (``)
+- remove headers with `col_names = FALSE`; column names will be X1, X2, X3, etc. 
+
+
+## Specify Column Types 
+
+R does a pretty good job of figuring out what the columns should be but if its needed to specify column types (or you want don't want the default col_types message to show) column types can be specified:  
+
+```{r}
+read_csv("example.csv"
+         , col_types = cols(
+            `Name 1`   = col_character()
+          , `Name (2)` = col_double()
+          , `Name #3`  = col_double()
+           )
+)
+```
+
+
+## Write (Export) 
+
+Can use `write_csv()` or `write.csv()` - have sightly different functionality.    
+
+```{r}
+test <- read_csv("example.csv"
+         , col_types = cols(
+            `Name 1`   = col_character()
+          , `Name (2)` = col_double()
+          , `Name #3`  = col_double()
+           )
+)
+write_csv(test, "example_export1.csv")
+write.csv(test, "example_export2.csv")
+```
+
+Rownames; `row.names = TRUE` to include; `row.names = FALSE` to exclude 
+
+* `write.csv()` default includes row names (usually row number) 
+* `write_csv()` default does not include row names; CANNOT ADD
+
+&nbsp; 
+
+NA values; `na = ""` to have missing data be exported as blank cell 
+
+* If data set is a base R data frame: 
+  + `write.csv()` default is `na = "NA"` for numeric, always blank for character (can't change!) 
+  + `write_csv()` default is `na = "NA"` for numeric, always blank for character (can't change!) 
+* If data set is a tibble: 
+  + `write.csv()` default is `na = "NA"` for numeric and character 
+  + `write_csv()` default is `na = "NA"` for numeric and character 
+
+
