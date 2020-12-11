@@ -36,7 +36,7 @@ read_csv("example.csv")
 
 - output is tibble (tidyverse)
 - receive message with type of columns that R is using for import 
-- missing for character and numeric is NA (colored red) in R console; outputs (html) will show has <NA> for character and NA for numeric 
+- missing for character and numeric is NA (colored red) in R console; outputs (html) will show \<NA\> for missing character and NA for missing numeric 
 - headers are that have spaces or special characters are placed within backticks (``)
 - remove headers with `col_names = FALSE`; column names will be X1, X2, X3, etc. 
 
