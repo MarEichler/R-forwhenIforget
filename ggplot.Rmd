@@ -65,7 +65,7 @@ Sometimes I'm working on two different types of plots (like a bar chart and a sc
 
 
 
-### Same geom type
+### `gridExtra::grid.arrange()` and `cowplot::plot_grid()`
 ```{r}
 # two different bar charts
 A <- ggplot(mpg, aes(class))+geom_bar()+coord_flip()+ylim(0, 109)
@@ -87,14 +87,43 @@ gB <- ggplotGrob(B)
 grid::grid.draw(rbind(gA, gB))
 ```
 
-Another option is `facet_wrap`, which works great if the axes are the same for the different varaibles you want to compare, but isn't a perfect solution to everything (see below). 
+The `cowplot::plot_grid()` function allows you to line up plots by a specific axis. 
+
 ```{r}
-tidy.df <- pivot_longer(mpg, c(class, drv))
-ggplot(tidy.df, aes(value))+geom_bar()+facet_wrap(~name)
+cowplot::plot_grid(A, B, ncol = 1, align = "v")
+```
+
+### Facets 
+
+Another option is `facet_wrap()` or `facet_grid()`, which can works  if the axes are the same for the different variables you want to compare, but be careful as facets are supposed to be comparing items with the same measurements.  
+
+```{r}
+tidy.df <- pivot_longer(mpg, c(class, drv), names_to = "category", values_to = "type")
+
+ggplot(tidy.df, aes(type))+
+  geom_bar()+
+  coord_flip()+ 
+  facet_wrap(
+      ~category
+    ,  ncol = 1
+    , scales = "free" #removes types from the axis if that category has 0 cars of that type 
+  )
+
+
+ggplot(tidy.df, aes(type))+
+  geom_bar()+
+  coord_flip()+ 
+  facet_grid(
+      category ~ . 
+    , scales = "free" #removes types from the axis if that category has 0 cars of that type 
+    , space  = "free" #spaces based on number of obs (i.e. number of bars);
+                      #         rather than giving each facet equal sizing
+  )
 ```
 
 
-### Bar Chart and Scatter Plots  
+
+### Mixed Geoms (Bar + Scatter)  
 Scatter plots and bar charts will not line up automatically, even when using the `grid.draw` command detailed above.  This is because their default limits are different given that the bar chart is centered on the value and the scatter plot is a single point on the value.  
 
 ```{r}
@@ -117,7 +146,7 @@ B <- ggplot(economics_small, aes(date, uempmed))+
 
 gA <- ggplotGrob(A) 
 gB <- ggplotGrob(B)
-grid::grid.draw(rbind(gA, gB))
+grid::grid.draw(rbind(gA, gB)) #cowplot::plot_grid(A, B, ncol = 1, align = "v") produces same result 
 ```
 
 In order to line the up there a a couple of options.  
@@ -165,7 +194,7 @@ gB <- ggplotGrob(B)
 grid::grid.draw(rbind(gA, gB))
 ```
 
-### Shift Bar chart to right  
+#### Shift Bar chart to right  
 Bar charts are automatically centered over the x-value.  Bar charts (and any geom object) can be shifted by using `position - position_nudge())`.  The shift needs to be half a unit on the x-axis, again here it is monthly data so a half unit would be ~15 days.  
 <a href="https://stackoverflow.com/questions/38752968/shift-geom-bar-right-not-center-aligned" target="_blank"> Source </a>
 
