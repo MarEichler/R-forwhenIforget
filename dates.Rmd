@@ -1,0 +1,122 @@
+---
+title: "Dates and Times"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+## Date Formats 
+```{r, echo = FALSE}
+tibble(String = NA, Meaning = NA) %>%
+  add_row(String = "%a", Meaning = "Day of the week, abbreviated (Mon-Sun)") %>% 
+  add_row(String = "%A", Meaning = "Day of the week, full (Monday-Sunday") %>%
+  add_row(String = "%w", Meaning = "Day of the week, numeric, 0 = Sunday (0-6)") %>%
+  add_row(String = "%e", Meaning = "Day of month (1-31)") %>%
+  add_row(String = "%d", Meaning = "Day of month (01-31)") %>%
+  add_row(String = "%m", Meaning = "Month, numeric (01-12)") %>%
+  add_row(String = "%b", Meaning = "Month, abbreviated (Jan-Dec)") %>%
+  add_row(String = "%B", Meaning = "Month, full (January-December)") %>%
+  add_row(String = "%y", Meaning = "Year, without century (00-99)") %>%
+  add_row(String = "%Y", Meaning = "Year, with century (0000-9999)") %>%
+  add_row(String = "%j", Meaning = "Day of the Year (001-366)") %>%
+  add_row(String = "%U", Meaning = "Week of year, numeric, starting on Sunday (00-52)") %>%
+  add_row(String = "%W", Meaning = "Week of year, numeric, starting on Monday (00-52)") %>%
+  add_row(String = "%x", Meaning = "Locale-specific date") %>%
+  drop_na() %>%
+  mutate( 
+      Code = paste0('format.Date("2020-12-10", "', String , '")')
+    , Output = format.Date("2020-12-10", String)
+  ) %>%
+  mutate(
+      String = cell_spec(String, monospace = TRUE)
+    , Code   = cell_spec(Code,   monospace = TRUE)
+  ) %>%
+  #escape = F --> allows conversion of html code
+  #ex make cell grey
+  #         escape = F --> NA     (in grey font)
+  #         escape = T --> <span style=" color: grey !important;" >NA</span>
+  kable(escape = F, label = "Date Formats") %>%
+  kable_styling(
+     # html_font = "arial" #"mono-space" 
+     bootstrap_options = c(
+          "striped" #add striped color to rows
+        , "hover" #highlight row when hover over it 
+        , full_width = FALSE #doesn't have to be full width 
+      )
+  )
+  
+```
+
+
+
+
+## Time Formats 
+
+```{r, echo = FALSE}
+tibble(String = NA, Meaning = NA) %>%
+  add_row(String = "%S", Meaning = "Second (00-59)") %>%
+  add_row(String = "%M", Meaning = "Minute (00-59)") %>%
+  add_row(String = "%l", Meaning = "Hour, in 12-hour clock (1-12)") %>%
+  add_row(String = "%I", Meaning = "Hour, in 12-hour clock (01-12)") %>%
+  add_row(String = "%p", Meaning = "am/pm") %>% 
+  add_row(String = "%H", Meaning = "Hour, in 24-hour clock (00-23)") %>%
+  add_row(String = "%X", Meaning = "Locale-specific time") %>%
+  add_row(String = "%c", Meaning = "Locale-specific date and time") %>%
+  add_row(String = "%z", Meaning = "Offset from GMT") %>%
+  add_row(String = "%Z", Meaning = "Time zone (character)") %>%
+  drop_na() %>%
+  mutate( 
+      Code = paste0('format.Date(as.POSIXct("2020-12-10 15:30:10", tz = "America/Chicago"), "', String , '")')
+    , Output = format.Date(as.POSIXct("2020-12-10 15:30:10", tz = "America/Chicago"), String)
+  ) %>%
+  mutate(
+      String = cell_spec(String, monospace = TRUE)
+    , Code   = cell_spec(Code,   monospace = TRUE)
+  ) %>%
+  #escape = F --> allows conversion of html code
+  #ex make cell grey
+  #         escape = F --> NA     (in grey font)
+  #         escape = T --> <span style=" color: grey !important;" >NA</span>
+  kable(escape = F, label = "Date Formats") %>%
+  kable_styling(
+     # html_font = "arial" #"mono-space" 
+     bootstrap_options = c(
+          "striped" #add striped color to rows
+        , "hover" #highlight row when hover over it 
+        , full_width = FALSE #doesn't have to be full width 
+      )
+  )
+```
+
+## Time Zone options in R
+
+The above example uses Central time and so I can use `tz = America/Chicago`; other timezone options can be found using the code below: 
+
+```{r}
+#check system time zone
+Sys.timezone(location = TRUE)
+
+#other time zone options (only show first 20)
+OlsonNames()[1:20]
+```
+
+
+
+## Links to Resources
+
+<a href="https://ggplot2-book.org/scale-position.html"          target="_blank"> ggplot2 - Hadley Wickham; Section 9: Scales: Position scales and axes </a>  
+<a href="https://www.r-bloggers.com/2013/08/date-formats-in-r/" target="_blank"> Date Formats in R - R-Bloggers (Mollie) </a>  
+<a href="https://www.stat.berkeley.edu/~s133/dates.html"        target="_blank"> Dates and Times in R - stat.berkeley </a>
+

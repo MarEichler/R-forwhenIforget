@@ -21,6 +21,11 @@ Because I keep saying I will remember how do do things and then I don't so I'm p
 ```{r child='csv.Rmd'}
 ```
 
+# **Dates and Times**
+
+```{r child='dates.Rmd'}
+```
+
 # **ggplot**
 ```{r child='ggplot.Rmd' }
 ```
