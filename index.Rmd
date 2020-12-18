@@ -32,12 +32,13 @@ Because I keep saying I will remember how do do things and then I don't so I'm p
 
 # **if else**
 ```{r child='if-else.Rmd'}
-
 ```
 
 # **Images**  
 ```{r child='images.Rmd'}
 ```
 
-
+# **Versions**  
+```{r child='versions.Rmd'}
+```
 
