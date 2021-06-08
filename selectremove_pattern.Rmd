@@ -1,0 +1,38 @@
+---
+title: "Select/Remove based on Pattern"
+subtitle: "" 
+author: ""
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: "tango"
+editor_options: 
+  chunk_output_type: console
+---
+
+## Select data frames based on pattern 
+
+```{r}
+thispatternexample <- "example1"
+patternexample     <- "example2"
+thispattern        <- "example3"
+
+mget(ls(pattern = "pattern"))
+mget(ls(pattern = "^pattern"))
+```
+
+```{r, eval = FALSE}
+mget(ls(pattern="^prefix\\..*")) # ^ = begins with, \\.. = . (such as df.suffix)
+
+# can use rbind or bind_rows to combine all df's (if they are the same variables) 
+bind_rows(mget(ls(pattern="^prefix\\..*")))
+```
+
+
+## Remove multiple items by pattern 
+
+```{r, eval = FALSE }
+rm(list = ls(pattern = "pattern"))
+rm(list = ls(pattern = "^prefix\\.")) #don't need double '.' like for mget() 
+```
