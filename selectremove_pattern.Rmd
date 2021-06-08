@@ -18,15 +18,24 @@ thispatternexample <- "example1"
 patternexample     <- "example2"
 thispattern        <- "example3"
 
-mget(ls(pattern = "pattern"))
-mget(ls(pattern = "^pattern"))
+mget(ls(pattern = "pattern"))  #pattern included within (*pattern*)
+mget(ls(pattern = "^pattern")) #starts with pattern 
+mget(ls(pattern = "pattern$")) #ends with pattern
 ```
 
-```{r, eval = FALSE}
-mget(ls(pattern="^prefix\\..*")) # ^ = begins with, \\.. = . (such as df.suffix)
+### Special Characters (like `.`)
+```{r}
+df.1_toprows   <- mtcars[1:2,]
+df.2_middle    <- mtcars[3:4,]
+df.3_otherrows <- mtcars[5:6, ] 
+df4other        <- mtcars[7:8,]
 
-# can use rbind or bind_rows to combine all df's (if they are the same variables) 
-bind_rows(mget(ls(pattern="^prefix\\..*")))
+mget(ls(pattern="^df"))
+mget(ls(pattern="^df.")) #ignores . (need to denote special character)
+mget(ls(pattern="^df\\.")) # use double slash for special character
+
+# can use bind_rows to combine all df's (if they are the same variables) 
+dplyr::bind_rows(mget(ls(pattern="^df\\.")))
 ```
 
 
@@ -34,5 +43,6 @@ bind_rows(mget(ls(pattern="^prefix\\..*")))
 
 ```{r, eval = FALSE }
 rm(list = ls(pattern = "pattern"))
-rm(list = ls(pattern = "^prefix\\.")) #don't need double '.' like for mget() 
+rm(list = ls(pattern = "^prefix\\."))
+rm(list = ls(pattern = "suffix$"))
 ```
